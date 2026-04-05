@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eagle Technology — Inteligência Artificial em Saúde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #C8281E;
+    --red2:   #9E1F17;
+    --dark:   #111111;
+    --darker: #0A0A0A;
+    --offwhite: #F2F0EC;
+    --gray:   #8A8A8A;
+    --light:  #DADAD8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--darker);
+    color: var(--offwhite);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(10,10,10,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,40,30,.15);
+  }
+  .nav-logo { height: 48px; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: .12em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--light); transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    color: #fff; background: var(--red);
+    padding: 10px 24px; border-radius: 2px;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--red2); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(200,40,30,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(200,40,30,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,40,30,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 12px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 2px; background: var(--red);
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(52px, 6vw, 88px);
+    line-height: .95; text-transform: uppercase;
+    margin-bottom: 28px;
+    letter-spacing: -.01em;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-desc {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--light); max-width: 480px; margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    color: #fff; background: var(--red);
+    padding: 16px 36px; border-radius: 2px;
+    transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--red2); transform: translateY(-1px); }
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 14px; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--offwhite);
+    border-bottom: 1px solid rgba(242,240,236,.3);
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .btn-secondary:hover { color: var(--red); border-color: var(--red); }
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-wrap {
+    position: relative;
+    width: 400px; height: 400px;
+  }
+  .hero-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 1px solid rgba(200,40,30,.2);
+    animation: spin 20s linear infinite;
+  }
+  .hero-ring:nth-child(2) {
+    inset: 20px;
+    border-color: rgba(200,40,30,.12);
+    animation-direction: reverse;
+    animation-duration: 30s;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-logo-big {
+    position: absolute; inset: 60px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-logo-big img { width: 100%; max-width: 260px; filter: drop-shadow(0 0 40px rgba(200,40,30,.3)); }
+  .hero-scan {
+    position: absolute; left: 60px; right: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    animation: scan 3s ease-in-out infinite;
+    top: 60px;
+  }
+  @keyframes scan {
+    0%   { top: 60px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: calc(100% - 60px); opacity: 0; }
+  }
+
+  /* ── STATS BAR ── */
+  .statsbar {
+    background: var(--red);
+    padding: 24px 48px;
+    display: flex; gap: 0; overflow: hidden;
+  }
+  .stat-item {
+    flex: 1; text-align: center;
+    padding: 0 24px;
+    border-right: 1px solid rgba(255,255,255,.2);
+  }
+  .stat-item:last-child { border: none; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 40px; line-height: 1;
+    color: #fff;
+  }
+  .stat-label {
+    font-size: 12px; letter-spacing: .08em;
+    text-transform: uppercase; color: rgba(255,255,255,.8);
+    margin-top: 4px;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 48px; }
+  .section-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 11px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--red); }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(36px, 4vw, 60px);
+    line-height: 1; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-desc {
+    font-size: 16px; font-weight: 300; line-height: 1.7;
+    color: var(--light); max-width: 560px;
+  }
+
+  /* ── PRODUTO ── */
+  #produto { background: var(--dark); }
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    margin-top: 60px;
+  }
+  .product-visual {
+    background: #161616;
+    border: 1px solid rgba(200,40,30,.15);
+    border-radius: 4px;
+    padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .product-visual::before {
+    content: 'PanorAI-FDI';
+    position: absolute; top: 16px; left: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--red);
+  }
+  .xray-mock {
+    width: 100%; aspect-ratio: 16/7;
+    background: #0d0d0d;
+    border-radius: 2px;
+    position: relative; overflow: hidden;
+    margin-top: 16px;
+  }
+  .xray-arch {
+    position: absolute;
+    bottom: 10%; left: 50%; transform: translateX(-50%);
+    width: 85%; height: 65%;
+    border: 1.5px solid rgba(200,200,180,.12);
+    border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  }
+  .xray-teeth {
+    position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+    width: 80%; display: flex; justify-content: center; gap: 3px;
+  }
+  .tooth {
+    width: 14px; height: 22px;
+    background: rgba(220,215,200,.08);
+    border: 1px solid rgba(220,215,200,.15);
+    border-radius: 2px 2px 3px 3px;
+  }
+  .tooth.flagged {
+    background: rgba(200,40,30,.18);
+    border-color: var(--red);
+    box-shadow: 0 0 8px rgba(200,40,30,.3);
+  }
+  .ai-label {
+    position: absolute; top: 30%; right: 8%;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px; letter-spacing: .1em;
+    color: var(--red); background: rgba(200,40,30,.1);
+    border: 1px solid rgba(200,40,30,.3);
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .confidence {
+    position: absolute; bottom: 16px; right: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; color: rgba(242,240,236,.5);
+  }
+  .features-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+  .feature-item {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 2px;
+    background: rgba(200,40,30,.1);
+    border: 1px solid rgba(200,40,30,.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .feature-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 16px; text-transform: uppercase;
+    letter-spacing: .05em; margin-bottom: 4px;
+  }
+  .feature-text p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.5; }
+
+  /* ── TECNOLOGIA ── */
+  #tecnologia { background: var(--darker); }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 60px;
+  }
+  .tech-card {
+    background: #111;
+    padding: 36px 32px;
+    position: relative; overflow: hidden;
+    transition: background .2s;
+  }
+  .tech-card:hover { background: #161616; }
+  .tech-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--red);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .tech-card:hover::before { transform: scaleX(1); }
+  .tech-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 64px; line-height: 1;
+    color: rgba(200,40,30,.15);
+    margin-bottom: 16px;
+  }
+  .tech-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 20px; text-transform: uppercase;
+    letter-spacing: .06em; margin-bottom: 10px;
+  }
+  .tech-card p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.6; }
+
+  /* ── ROADMAP ── */
+  #roadmap { background: var(--dark); }
+  .timeline {
+    margin-top: 60px; position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--red), rgba(200,40,30,.1));
+  }
+  .tl-item {
+    position: relative; padding: 0 0 48px 40px;
+  }
+  .tl-dot {
+    position: absolute; left: -40px; top: 4px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--red); border: 3px solid var(--dark);
+    box-shadow: 0 0 0 1px var(--red);
+  }
+  .tl-dot.future { background: #222; border-color: rgba(200,40,30,.4); box-shadow: none; }
+  .tl-phase {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 6px;
+  }
+  .tl-item h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 22px; text-transform: uppercase;
+    letter-spacing: .04em; margin-bottom: 8px;
+  }
+  .tl-item p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.6; max-width: 520px; }
+
+  /* ── CONTATO ── */
+  #contato {
+    background: var(--darker);
+    text-align: center; padding: 120px 48px;
+  }
+  #contato .section-tag { justify-content: center; }
+  #contato .section-tag::before { display: none; }
+  #contato .section-title { margin: 0 auto 20px; }
+  #contato .section-desc { margin: 0 auto 48px; text-align: center; }
+  .contact-email {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: clamp(20px, 3vw, 36px);
+    color: var(--offwhite); text-decoration: none;
+    border-bottom: 2px solid var(--red); padding-bottom: 4px;
+    transition: color .2s;
+  }
+  .contact-email:hover { color: var(--red); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080808;
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,.05);
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { height: 36px; opacity: .7; }
+  .footer-copy { font-size: 12px; color: var(--gray); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: var(--gray); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--red); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp .8s ease both; }
+  .hero-content > *:nth-child(1) { animation-delay: .1s; }
+  .hero-content > *:nth-child(2) { animation-delay: .25s; }
+  .hero-content > *:nth-child(3) { animation-delay: .4s; }
+  .hero-content > *:nth-child(4) { animation-delay: .55s; }
+  .hero-visual { animation: fadeUp 1s ease .4s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+    .hero-visual { display: none; }
+    .hero-actions { justify-content: center; }
+    section { padding: 72px 24px; }
+    .product-grid, .tech-grid { grid-template-columns: 1fr; gap: 40px; }
+    .statsbar { flex-direction: column; gap: 24px; }
+    .stat-item { border: none; border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: 24px; }
+    footer { flex-direction: column; text-align: center; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo" src="eagle.png" alt="Eagle Technology">
+  <ul class="nav-links">
+    <li><a href="#produto">Produto</a></li>
+    <li><a href="#tecnologia">Tecnologia</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a class="nav-cta" href="#contato">Fale conosco</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Inteligência Artificial em Saúde</div>
+    <h1 class="hero-title">
+      Diagnóstico<br>
+      <span>Mais</span><br>
+      Preciso.
+    </h1>
+    <p class="hero-desc">
+      Desenvolvemos soluções de IA para análise de radiografias panorâmicas odontológicas — reduzindo o tempo de diagnóstico e ampliando a precisão clínica no Brasil.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#produto">Conheça o PanorAI</a>
+      <a class="btn-secondary" href="#contato">Entre em contato →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-logo-big">
+        <img src="eagle.png" alt="Eagle Technology Logo">
+      </div>
+      <div class="hero-scan"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="statsbar">
+  <div class="stat-item">
+    <div class="stat-num">10k+</div>
+    <div class="stat-label">Imagens no dataset</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">32</div>
+    <div class="stat-label">Classes clínicas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">9</div>
+    <div class="stat-label">Meses de desenvolvimento</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">BR</div>
+    <div class="stat-label">Dataset 100% nacional</div>
+  </div>
+</div>
+
+<!-- PRODUTO -->
+<section id="produto">
+  <div class="section-tag">Nosso produto</div>
+  <h2 class="section-title">PanorAI-FDI</h2>
+  <p class="section-desc">Sistema de análise automatizada de radiografias panorâmicas odontológicas baseado em inteligência artificial — desenvolvido com dados brasileiros, para o mercado brasileiro.</p>
+
+  <div class="product-grid">
+    <div class="product-visual">
+      <div class="xray-mock">
+        <div class="xray-arch"></div>
+        <div class="xray-teeth">
+          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+          <div class="tooth flagged"></div><div class="tooth"></div>
+          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+          <div class="tooth flagged"></div><div class="tooth"></div>
+          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
+        </div>
+        <div class="ai-label">Cárie detectada</div>
+        <div class="confidence">Confiança: 94.2%</div>
+      </div>
+    </div>
+
+    <ul class="features-list">
+      <li class="feature-item">
+        <div class="feature-icon">🦷</div>
+        <div class="feature-text">
+          <h4>Enumeração FDI</h4>
+          <p>Identificação e numeração automática de cada dente seguindo a notação internacional FDI.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-text">
+          <h4>Detecção de patologias</h4>
+          <p>Identificação de cáries, lesões periapicais, ausências e até 32 classes clínicas.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-text">
+          <h4>Resultado em segundos</h4>
+          <p>Análise completa em menos de 2 segundos, integrável a sistemas de gestão odontológica.</p>
+        </div>
+      </li>
+      <li class="feature-item">
+        <div class="feature-icon">🇧🇷</div>
+        <div class="feature-text">
+          <h4>Dados 100% brasileiros</h4>
+          <p>Treinado com dataset proprietário nacional, representando a diversidade regional do país.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- TECNOLOGIA -->
+<section id="tecnologia">
+  <div class="section-tag">Como funciona</div>
+  <h2 class="section-title">Tecnologia</h2>
+  <p class="section-desc">Arquitetura de ponta combinando visão computacional e aprendizado semi-supervisionado para máxima eficiência com dados clínicos reais.</p>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-num">01</div>
+      <h3>YOLOv8</h3>
+      <p>Arquitetura de detecção de objetos estado da arte, otimizada para imagens radiográficas de alta variabilidade.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-num">02</div>
+      <h3>Semi-supervised</h3>
+      <p>Pipeline de aprendizado semi-supervisionado com pseudo-labels e threshold de confiança ≥ 0,85 para escalar o treinamento.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-num">03</div>
+      <h3>Active learning</h3>
+      <p>Seleção inteligente das amostras mais incertas para anotação humana, reduzindo custo sem sacrificar qualidade.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-num">04</div>
+      <h3>MLflow + DVC</h3>
+      <p>Rastreabilidade completa de experimentos e versões de dataset — atendendo aos requisitos da ANVISA RDC 657/2022.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-num">05</div>
+      <h3>LGPD compliant</h3>
+      <p>Pipeline de anonimização DICOM auditável com log imutável, em conformidade com a Lei Geral de Proteção de Dados.</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-num">06</div>
+      <h3>Caminho ANVISA</h3>
+      <p>Desenvolvido desde o primeiro commit com os requisitos da RDC 657/2022 — ISO 13485, ISO 14971 e IEC 62304.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-tag">Onde estamos</div>
+  <h2 class="section-title">Roadmap</h2>
+  <p class="section-desc">Desenvolvimento estruturado em fases, com financiamento FAPESP PIPE e foco em registro regulatório.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">Concluído</div>
+      <h3>MVP funcional</h3>
+      <p>Modelo YOLO treinado com 13.000 imagens públicas, capaz de identificar dentes, ausências e patologias básicas.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">Em andamento</div>
+      <h3>PIPE Fase 1 — FAPESP</h3>
+      <p>Construção de dataset proprietário brasileiro (10.000 imagens), expansão para 32 classes e validação clínica com especialistas.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot future"></div>
+      <div class="tl-phase">Próxima fase</div>
+      <h3>Produto comercial</h3>
+      <p>API de análise integrada a sistemas de gestão odontológica, modelo SaaS por exame analisado.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot future"></div>
+      <div class="tl-phase">Longo prazo</div>
+      <h3>Registro ANVISA</h3>
+      <p>Submissão do dossier técnico regulatório e obtenção do registro como Software como Dispositivo Médico (SaMD) — RDC 657/2022.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-tag">Fale conosco</div>
+  <h2 class="section-title">Vamos conversar</h2>
+  <p class="section-desc">Clínica, distribuidora de equipamentos ou investidor interessado em IA odontológica? Entre em contato.</p>
+  <a class="contact-email" href="mailto:contato@eagletechnology.com.br">contato@eagletechnology.com.br</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo" src="eagle.png" alt="Eagle Technology">
+  <span class="footer-copy">© 2026 Eagle Technology da Informação. Todos os direitos reservados.</span>
+  <div class="footer-links">
+    <a href="mailto:contato@eagletechnology.com.br">Contato</a>
+    <a href="#produto">Produto</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+</footer>
+
+</body>
+</html>
