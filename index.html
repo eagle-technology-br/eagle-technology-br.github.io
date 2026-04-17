@@ -3,8 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eagle Technology — Inteligência Artificial em Saúde</title>
+<title>Eagle Technology &mdash; Tecnologia que resolve problemas reais</title>
+<meta name="description" content="Desenvolvemos soluções de IA aplicada em saúde, segurança, gestão e marketing. Produtos 100% brasileiros: PanorAI (odontologia &middot; ANVISA), LarSeguro (monitoramento de idosos), Clínica Inteligente e Media P1A Builder.">
+<link rel="canonical" href="https://www.eagletechnology.com.br/">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<meta property="og:title" content="Eagle Technology &mdash; Tecnologia que resolve problemas reais">
+<meta property="og:description" content="IA aplicada em saúde, segurança, gestão e marketing. PanorAI, LarSeguro, Clínica Inteligente e Media P1A Builder.">
+<meta property="og:image" content="https://www.eagletechnology.com.br/og-image.jpg">
+<meta property="og:url" content="https://www.eagletechnology.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eagle Technology &mdash; Tecnologia que resolve problemas reais">
+<meta name="twitter:description" content="IA aplicada em saúde, segurança e gestão.">
+<meta name="twitter:image" content="https://www.eagletechnology.com.br/og-image.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" as="image" href="eagle.png" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -18,7 +37,6 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -26,6 +44,22 @@
     background: var(--darker);
     color: var(--offwhite);
     overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── FOCUS STATES ── */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--red);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   /* ── NAV ── */
@@ -55,6 +89,13 @@
     transition: background .2s;
   }
   .nav-cta:hover { background: var(--red2); }
+  .nav-toggle {
+    display: none;
+    background: none; border: none; color: var(--offwhite);
+    font-size: 28px; cursor: pointer; padding: 4px 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    order: 3;
+  }
 
   /* ── HERO ── */
   .hero {
@@ -93,7 +134,7 @@
   }
   .hero-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900; font-size: clamp(52px, 6vw, 88px);
+    font-weight: 900; font-size: clamp(48px, 5.5vw, 82px);
     line-height: .95; text-transform: uppercase;
     margin-bottom: 28px;
     letter-spacing: -.01em;
@@ -101,7 +142,7 @@
   .hero-title span { color: var(--red); }
   .hero-desc {
     font-size: 17px; font-weight: 300; line-height: 1.7;
-    color: var(--light); max-width: 480px; margin-bottom: 44px;
+    color: var(--light); max-width: 500px; margin-bottom: 44px;
   }
   .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
   .btn-primary {
@@ -111,6 +152,7 @@
     color: #fff; background: var(--red);
     padding: 16px 36px; border-radius: 2px;
     transition: background .2s, transform .15s;
+    border: none; cursor: pointer;
   }
   .btn-primary:hover { background: var(--red2); transform: translateY(-1px); }
   .btn-secondary {
@@ -123,6 +165,17 @@
     transition: color .2s, border-color .2s;
   }
   .btn-secondary:hover { color: var(--red); border-color: var(--red); }
+  .btn-outline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 12px; letter-spacing: .1em;
+    text-transform: uppercase; text-decoration: none;
+    color: var(--red);
+    border: 1px solid rgba(200,40,30,.3);
+    padding: 10px 20px; border-radius: 2px;
+    transition: all .2s;
+    display: inline-block; margin-top: 20px;
+  }
+  .btn-outline:hover { background: rgba(200,40,30,.1); border-color: var(--red); }
   .hero-visual {
     position: relative; z-index: 1;
     display: flex; align-items: center; justify-content: center;
@@ -202,106 +255,212 @@
   }
   .section-desc {
     font-size: 16px; font-weight: 300; line-height: 1.7;
-    color: var(--light); max-width: 560px;
+    color: var(--light); max-width: 620px;
   }
 
-  /* ── PRODUTO ── */
-  #produto { background: var(--dark); }
-  .product-grid {
+  /* ── QUEM SOMOS ── */
+  #quem-somos { background: var(--dark); }
+  .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
+    gap: 80px; align-items: start;
     margin-top: 60px;
   }
-  .product-visual {
+  .about-text {
+    font-size: 15px; font-weight: 300; line-height: 1.8;
+    color: var(--light);
+  }
+  .about-text p { margin-bottom: 20px; }
+  .about-text strong { color: var(--offwhite); font-weight: 500; }
+  .about-highlight {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 22px; text-transform: uppercase;
+    letter-spacing: .02em; color: var(--offwhite);
+    border-left: 3px solid var(--red);
+    padding-left: 20px;
+    line-height: 1.4;
+    margin-top: 16px;
+  }
+  .founders {
+    display: flex; flex-direction: column; gap: 24px;
+    margin-top: 20px;
+  }
+  .founder-card {
     background: #161616;
     border: 1px solid rgba(200,40,30,.15);
     border-radius: 4px;
-    padding: 40px;
+    padding: 28px 32px;
     position: relative; overflow: hidden;
   }
-  .product-visual::before {
-    content: 'PanorAI-FDI';
-    position: absolute; top: 16px; left: 20px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
-    color: var(--red);
+  .founder-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px; background: var(--red);
   }
-  .xray-mock {
-    width: 100%; aspect-ratio: 16/7;
-    background: #0d0d0d;
-    border-radius: 2px;
+  .founder-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 20px; text-transform: uppercase;
+    letter-spacing: .04em; margin-bottom: 4px;
+  }
+  .founder-role {
+    font-size: 13px; color: var(--red); font-weight: 500;
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 10px;
+  }
+  .founder-desc {
+    font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.6;
+  }
+
+  /* ── PRODUTOS ── */
+  #produtos { background: var(--darker); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .product-card {
+    background: #111;
+    padding: 48px 36px;
     position: relative; overflow: hidden;
-    margin-top: 16px;
+    transition: background .2s, transform .3s;
+    display: flex; flex-direction: column;
   }
-  .xray-arch {
-    position: absolute;
-    bottom: 10%; left: 50%; transform: translateX(-50%);
-    width: 85%; height: 65%;
-    border: 1.5px solid rgba(200,200,180,.12);
-    border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  .product-card:hover { background: #161616; transform: translateY(-4px); }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--red);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
   }
-  .xray-teeth {
-    position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
-    width: 80%; display: flex; justify-content: center; gap: 3px;
-  }
-  .tooth {
-    width: 14px; height: 22px;
-    background: rgba(220,215,200,.08);
-    border: 1px solid rgba(220,215,200,.15);
-    border-radius: 2px 2px 3px 3px;
-  }
-  .tooth.flagged {
-    background: rgba(200,40,30,.18);
-    border-color: var(--red);
-    box-shadow: 0 0 8px rgba(200,40,30,.3);
-  }
-  .ai-label {
-    position: absolute; top: 30%; right: 8%;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px; letter-spacing: .1em;
-    color: var(--red); background: rgba(200,40,30,.1);
-    border: 1px solid rgba(200,40,30,.3);
-    padding: 3px 8px; border-radius: 2px;
-  }
-  .confidence {
-    position: absolute; bottom: 16px; right: 16px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; color: rgba(242,240,236,.5);
-  }
-  .features-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
-  .feature-item {
-    display: flex; gap: 16px; align-items: flex-start;
-  }
-  .feature-icon {
-    width: 40px; height: 40px; border-radius: 2px;
+  .product-card:hover::before { transform: scaleX(1); }
+  .product-icon {
+    width: 56px; height: 56px; border-radius: 4px;
     background: rgba(200,40,30,.1);
     border: 1px solid rgba(200,40,30,.2);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 18px;
+    font-size: 28px;
+    margin-bottom: 24px;
   }
-  .feature-text h4 {
+  .product-card h3 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700; font-size: 16px; text-transform: uppercase;
-    letter-spacing: .05em; margin-bottom: 4px;
+    font-weight: 700; font-size: 24px; text-transform: uppercase;
+    letter-spacing: .04em; margin-bottom: 8px;
   }
-  .feature-text p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.5; }
+  .product-segment {
+    font-size: 11px; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 16px;
+  }
+  .product-card p {
+    font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.7;
+    flex: 1;
+  }
+  .product-status {
+    margin-top: 24px; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .status-dot.active { background: #22C55E; box-shadow: 0 0 8px rgba(34,197,94,.4); }
+  .status-dot.dev { background: #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,.4); }
+
+  /* ── SHOWCASE ── */
+  #showcase { background: var(--dark); }
+  .showcase-wrap {
+    display: flex; flex-direction: column; gap: 120px;
+    margin-top: 80px;
+  }
+  .showcase-item {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .showcase-item.reverse {
+    grid-template-columns: 1fr 1.15fr;
+  }
+  .showcase-item.reverse .showcase-img-wrap { order: 2; }
+  .showcase-item.reverse .showcase-copy { order: 1; }
+  .showcase-img-wrap {
+    position: relative;
+    border: 1px solid rgba(200,40,30,.2);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #050505;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(200,40,30,.05);
+    transition: transform .4s, box-shadow .4s;
+  }
+  .showcase-img-wrap:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 100px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(200,40,30,.2);
+  }
+  .showcase-img-wrap::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 40px; height: 40px;
+    background: var(--red);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    z-index: 2;
+  }
+  .showcase-img-wrap img {
+    width: 100%; height: auto; display: block;
+  }
+  .showcase-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 11px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .showcase-label::before { content: ''; width: 20px; height: 2px; background: var(--red); }
+  .showcase-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(30px, 3.2vw, 46px);
+    line-height: 1; text-transform: uppercase;
+    letter-spacing: -.01em;
+    margin-bottom: 18px;
+  }
+  .showcase-lede {
+    font-size: 15px; font-weight: 300; line-height: 1.7;
+    color: var(--light); margin-bottom: 24px; max-width: 480px;
+  }
+  .showcase-highlights {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .showcase-highlights li {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--offwhite);
+    padding-left: 28px; position: relative;
+    line-height: 1.4;
+  }
+  .showcase-highlights li::before {
+    content: '';
+    position: absolute; left: 0; top: 6px;
+    width: 16px; height: 2px; background: var(--red);
+  }
 
   /* ── TECNOLOGIA ── */
-  #tecnologia { background: var(--darker); }
+  #tecnologia { background: var(--dark); }
   .tech-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px; margin-top: 60px;
   }
   .tech-card {
-    background: #111;
+    background: #161616;
     padding: 36px 32px;
     position: relative; overflow: hidden;
-    transition: background .2s;
+    transition: background .2s, transform .3s;
   }
-  .tech-card:hover { background: #161616; }
+  .tech-card:hover { background: #1a1a1a; transform: translateY(-4px); }
   .tech-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0;
@@ -323,8 +482,8 @@
   }
   .tech-card p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.6; }
 
-  /* ── ROADMAP ── */
-  #roadmap { background: var(--dark); }
+  /* ── TRAJETORIA ── */
+  #trajetoria { background: var(--darker); }
   .timeline {
     margin-top: 60px; position: relative;
     padding-left: 32px;
@@ -340,7 +499,7 @@
   .tl-dot {
     position: absolute; left: -40px; top: 4px;
     width: 16px; height: 16px; border-radius: 50%;
-    background: var(--red); border: 3px solid var(--dark);
+    background: var(--red); border: 3px solid var(--darker);
     box-shadow: 0 0 0 1px var(--red);
   }
   .tl-dot.future { background: #222; border-color: rgba(200,40,30,.4); box-shadow: none; }
@@ -354,11 +513,11 @@
     font-weight: 700; font-size: 22px; text-transform: uppercase;
     letter-spacing: .04em; margin-bottom: 8px;
   }
-  .tl-item p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.6; max-width: 520px; }
+  .tl-item p { font-size: 14px; font-weight: 300; color: var(--light); line-height: 1.65; max-width: 560px; }
 
   /* ── CONTATO ── */
   #contato {
-    background: var(--darker);
+    background: var(--dark);
     text-align: center; padding: 120px 48px;
   }
   #contato .section-tag { justify-content: center; }
@@ -401,15 +560,54 @@
   .hero-visual { animation: fadeUp 1s ease .4s both; }
 
   /* ── RESPONSIVE ── */
+  @media (min-width: 1440px) {
+    section { padding: 100px calc((100vw - 1280px) / 2 + 48px); }
+    nav { padding: 18px calc((100vw - 1280px) / 2 + 48px); }
+    .statsbar { padding: 24px calc((100vw - 1280px) / 2 + 48px); }
+    footer { padding: 32px calc((100vw - 1280px) / 2 + 48px); }
+    .hero { padding: 120px calc((100vw - 1280px) / 2 + 48px) 80px; }
+  }
+
+  @media (max-width: 1200px) {
+    .products-grid, .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 1400px) and (min-width: 1201px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
-    .nav-links { display: none; }
+    .nav-links {
+      display: none;
+      position: fixed; top: 80px; left: 0; right: 0;
+      background: rgba(10,10,10,.98);
+      flex-direction: column; gap: 0;
+      border-bottom: 1px solid rgba(200,40,30,.15);
+      padding: 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { border-bottom: 1px solid rgba(255,255,255,.05); }
+    .nav-links a {
+      display: block; padding: 16px 24px; font-size: 14px;
+    }
+    .nav-toggle { display: block; order: 3; }
+    .nav-cta { display: none; }
     .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
     .hero-visual { display: none; }
     .hero-actions { justify-content: center; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-eyebrow { justify-content: center; }
     section { padding: 72px 24px; }
-    .product-grid, .tech-grid { grid-template-columns: 1fr; gap: 40px; }
-    .statsbar { flex-direction: column; gap: 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .products-grid, .tech-grid { grid-template-columns: 1fr; gap: 2px; }
+    .showcase-wrap { gap: 80px; }
+    .showcase-item,
+    .showcase-item.reverse {
+      grid-template-columns: 1fr; gap: 32px;
+    }
+    .showcase-item.reverse .showcase-img-wrap,
+    .showcase-item.reverse .showcase-copy { order: unset; }
+    .statsbar { flex-direction: column; gap: 24px; padding: 24px; }
     .stat-item { border: none; border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: 24px; }
     footer { flex-direction: column; text-align: center; padding: 24px; }
   }
@@ -420,11 +618,14 @@
 <!-- NAV -->
 <nav>
   <img class="nav-logo" src="eagle.png" alt="Eagle Technology">
-  <ul class="nav-links">
-    <li><a href="#produto">Produto</a></li>
-    <li><a href="#tecnologia">Tecnologia</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contato">Contato</a></li>
+  <button class="nav-toggle" aria-label="Abrir menu" aria-controls="primary-nav" aria-expanded="false" onclick="var nav=document.getElementById('primary-nav'); nav.classList.toggle('open'); var open=nav.classList.contains('open'); this.setAttribute('aria-expanded',open); this.setAttribute('aria-label',open?'Fechar menu':'Abrir menu'); this.textContent=open?'\u2715':'\u2630';">&#9776;</button>
+  <ul id="primary-nav" class="nav-links">
+    <li><a href="#quem-somos" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Quem Somos</a></li>
+    <li><a href="#produtos" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Produtos</a></li>
+    <li><a href="#showcase" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Em ação</a></li>
+    <li><a href="#tecnologia" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Tecnologia</a></li>
+    <li><a href="#trajetoria" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Trajetória</a></li>
+    <li><a href="#contato" onclick="var n=document.getElementById('primary-nav'),b=document.querySelector('.nav-toggle');n.classList.remove('open');b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Abrir menu');b.textContent='\u2630';">Contato</a></li>
   </ul>
   <a class="nav-cta" href="#contato">Fale conosco</a>
 </nav>
@@ -433,18 +634,18 @@
 <section class="hero">
   <div class="hero-grid-lines"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Inteligência Artificial em Saúde</div>
+    <div class="hero-eyebrow">Eagle Technology da Informação</div>
     <h1 class="hero-title">
-      Diagnóstico<br>
-      <span>Mais</span><br>
-      Preciso.
+      Tecnologia<br>
+      que <span>resolve</span><br>
+      problemas reais.
     </h1>
     <p class="hero-desc">
-      Desenvolvemos soluções de IA para análise de radiografias panorâmicas odontológicas — reduzindo o tempo de diagnóstico e ampliando a precisão clínica no Brasil.
+      Da construção civil à inteligência artificial. Desenvolvemos soluções de alta tecnologia em saúde, segurança e gestão &mdash; com a inquietação de quem nunca parou no tempo.
     </p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#produto">Conheça o PanorAI</a>
-      <a class="btn-secondary" href="#contato">Entre em contato →</a>
+      <a class="btn-primary" href="#produtos">Nossos Produtos</a>
+      <a class="btn-secondary" href="#quem-somos">Conheça nossa história &rarr;</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -452,7 +653,7 @@
       <div class="hero-ring"></div>
       <div class="hero-ring"></div>
       <div class="hero-logo-big">
-        <img src="eagle.png" alt="Eagle Technology Logo">
+        <img src="eagle.png" alt="">
       </div>
       <div class="hero-scan"></div>
     </div>
@@ -462,150 +663,280 @@
 <!-- STATS BAR -->
 <div class="statsbar">
   <div class="stat-item">
-    <div class="stat-num">10k+</div>
-    <div class="stat-label">Imagens no dataset</div>
+    <div class="stat-num">9+</div>
+    <div class="stat-label">Anos de pesquisa</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">32</div>
-    <div class="stat-label">Classes clínicas</div>
+    <div class="stat-num">4</div>
+    <div class="stat-label">Mercados atendidos</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">9</div>
-    <div class="stat-label">Meses de desenvolvimento</div>
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Soluções brasileiras</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">BR</div>
-    <div class="stat-label">Dataset 100% nacional</div>
+    <div class="stat-num">40+</div>
+    <div class="stat-label">Anos de experiência somada</div>
   </div>
 </div>
 
-<!-- PRODUTO -->
-<section id="produto">
-  <div class="section-tag">Nosso produto</div>
-  <h2 class="section-title">PanorAI-FDI</h2>
-  <p class="section-desc">Sistema de análise automatizada de radiografias panorâmicas odontológicas baseado em inteligência artificial — desenvolvido com dados brasileiros, para o mercado brasileiro.</p>
+<!-- QUEM SOMOS -->
+<section id="quem-somos">
+  <div class="section-tag">Quem somos</div>
+  <h2 class="section-title">Nossa História</h2>
+  <p class="section-desc">A Eagle Technology nasceu da inquietação de dois empreendedores que se recusam a parar no tempo.</p>
 
-  <div class="product-grid">
-    <div class="product-visual">
-      <div class="xray-mock">
-        <div class="xray-arch"></div>
-        <div class="xray-teeth">
-          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
-          <div class="tooth flagged"></div><div class="tooth"></div>
-          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
-          <div class="tooth flagged"></div><div class="tooth"></div>
-          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
-          <div class="tooth"></div><div class="tooth"></div><div class="tooth"></div>
-        </div>
-        <div class="ai-label">Cárie detectada</div>
-        <div class="confidence">Confiança: 94.2%</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Em 2017, <strong>David Silveira</strong> e <strong>Eliezer Oliveira</strong> se conheceram no mundo dos negócios de alta performance &mdash; um vindo da Tecnologia da Informação de grandes corporações, outro da Engenharia Civil de grandes empresas posicionadas no mercado internacional. Da conversa sobre problemas reais surgiu a primeira solução: um sistema de localização em tempo real, de máquinas, pessoas e materiais em canteiros de obras, sem fio e sem interferência humana M2M.</p>
+
+      <p>A tecnologia saiu do papel. Firmou-se parceria com a <strong>Zebra Technologies</strong>, utilizando hardware de localização por tags e antenas (Wherlan/Wheretag) sendo naquele momento, o que mais desenvolvido existia no mundo, à disposição no mercado. A solução ficou pronta &mdash; mas, o mercado não. O impacto econômico da Operação Lava Jato travou investimentos no setor de construção em escala global. A Eagle pivotou: adaptou a plataforma para localização de veículos em pátios de leiloeiras. De novo, a solução também ficou pronta. Mais uma vez, o cenário de investimento não acompanhou os ganhos reais das novas soluções tecnológicas.</p>
+
+      <p>O tempo passou. A tecnologia evoluiu. E a inquietação permaneceu. David e Eliezer sobreviveram e se mantêm ao longo de todos esses anos, firmes no campo das pesquisas, monitorando o desenvolvimento de novas tecnologias e prestando consultorias nas áreas as quais são especialistas.</p>
+
+      <p>Com a chegada da era da <strong>Inteligência Artificial</strong>, David e Eliezer enxergaram a oportunidade de aplicar todos esses anos de experiência em soluções de alta complexidade a novos mercados. A Eagle Technology renasceu &mdash; agora como uma empresa de IA aplicada, desenvolvendo produtos próprios em saúde, segurança e gestão.</p>
+
+      <div class="about-highlight">
+        Da construção civil à inteligência artificial, do canteiro de obras aos centros logísticos, pátios e infraestruturas fabris e até ambientes que tratam da vida humana &mdash; o que nos move é o mesmo desde o primeiro dia: resolver problemas reais com alta tecnologia que realmente funciona.
       </div>
     </div>
 
-    <ul class="features-list">
-      <li class="feature-item">
-        <div class="feature-icon">🦷</div>
-        <div class="feature-text">
-          <h4>Enumeração FDI</h4>
-          <p>Identificação e numeração automática de cada dente seguindo a notação internacional FDI.</p>
-        </div>
-      </li>
-      <li class="feature-item">
-        <div class="feature-icon">🔍</div>
-        <div class="feature-text">
-          <h4>Detecção de patologias</h4>
-          <p>Identificação de cáries, lesões periapicais, ausências e até 32 classes clínicas.</p>
-        </div>
-      </li>
-      <li class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-text">
-          <h4>Resultado em segundos</h4>
-          <p>Análise completa em menos de 2 segundos, integrável a sistemas de gestão odontológica.</p>
-        </div>
-      </li>
-      <li class="feature-item">
-        <div class="feature-icon">🇧🇷</div>
-        <div class="feature-text">
-          <h4>Dados 100% brasileiros</h4>
-          <p>Treinado com dataset proprietário nacional, representando a diversidade regional do país.</p>
-        </div>
-      </li>
-    </ul>
+    <div class="founders">
+      <div class="founder-card">
+        <div class="founder-name">David Silveira</div>
+        <div class="founder-role">Co-fundador &middot; Tecnologia da Informação</div>
+        <div class="founder-desc">Profissional de TI com trajetória em grandes corporações. Especialista em arquitetura de sistemas, inteligência artificial e desenvolvimento de soluções de alta complexidade. Responsável pela engenharia de produto e inovação tecnológica da Eagle.</div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-name">Eliezer Oliveira</div>
+        <div class="founder-role">Co-fundador &middot; Engenharia Civil</div>
+        <div class="founder-desc">Engenheiro com experiência em grandes empresas posicionadas no mercado internacional. Especialista em gestão de projetos e operações de alta performance. Responsável pela estratégia de negócios e desenvolvimento comercial da Eagle.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="section-tag">Nossos produtos</div>
+  <h2 class="section-title">Soluções que desenvolvemos</h2>
+  <p class="section-desc">Cada produto nasce de um problema real identificado no mercado brasileiro, desenvolvido com tecnologia proprietária e foco em resultado.</p>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-1.5-2-4-2.5-6-1S2.5 8 4 10.5c1.5 2.5 6 6 8 8.5 2-2.5 6.5-6 8-8.5s.5-3.5-1.5-4.5-4.5-1-6 1z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg></div>
+      <div class="product-segment">Saúde &middot; Odontologia</div>
+      <h3>PanorAI</h3>
+      <p>Análise de radiografias panorâmicas com inteligência artificial. Detecção automática de patologias dentais em segundos, com dataset 100% brasileiro e caminho regulatório ANVISA.</p>
+      <div class="product-status">
+        <span class="status-dot active"></span>
+        <span style="color: var(--light);">Em desenvolvimento ativo &middot; PIPE FAPESP</span>
+      </div>
+      <a class="btn-outline" href="#contato">Falar com o time &rarr;</a>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <div class="product-segment">Segurança &middot; Monitoramento</div>
+      <h3>LarSeguro</h3>
+      <p>Monitoramento inteligente de idosos com alertas automáticos e modelo de indicação multinível. Segurança passiva sem wearable, com receita recorrente por assinatura.</p>
+      <div class="product-status">
+        <span class="status-dot dev"></span>
+        <span style="color: var(--light);">Backend e portal funcional</span>
+      </div>
+      <a class="btn-outline" href="#contato">Falar com o time &rarr;</a>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M9 16h6"/><path d="M12 13v6"/></svg></div>
+      <div class="product-segment">Saúde &middot; Gestão clínica</div>
+      <h3>Clínica Inteligente</h3>
+      <p>Plataforma de gestão para clínicas de acupuntura de alta performance. Agendamento, prontuário, fidelização e crescimento automatizado sob o conceito “Arte dos Resultados”.</p>
+      <div class="product-status">
+        <span class="status-dot dev"></span>
+        <span style="color: var(--light);">Em especificação e prototipagem</span>
+      </div>
+      <a class="btn-outline" href="#contato">Falar com o time &rarr;</a>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/><circle cx="7" cy="15" r="1.5" fill="var(--red)"/><circle cx="11" cy="11" r="1.5" fill="var(--red)"/><circle cx="15" cy="14" r="1.5" fill="var(--red)"/><circle cx="20" cy="8" r="1.5" fill="var(--red)"/></svg></div>
+      <div class="product-segment">Marketing &middot; Planejamento de mídia</div>
+      <h3>Media P1A Builder</h3>
+      <p>Simulador de investimento em mídia com assistente de IA. Otimiza alocação entre TV, Digital, OOH, Rádio e Print, calculando ROI, reach e GRP em tempo real para agências e anunciantes.</p>
+      <div class="product-status">
+        <span class="status-dot active"></span>
+        <span style="color: var(--light);">Pronto para uso &middot; v2</span>
+      </div>
+      <a class="btn-outline" href="#contato">Falar com o time &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <div class="section-tag">Produtos em ação</div>
+  <h2 class="section-title">Veja por dentro</h2>
+  <p class="section-desc">Interfaces reais dos produtos da Eagle. Cada tela abaixo é parte do software que entregamos &mdash; não é mockup.</p>
+
+  <div class="showcase-wrap">
+
+    <!-- PanorAI -->
+    <div class="showcase-item">
+      <div class="showcase-img-wrap">
+        <img src="assets/produtos/panorai/02-analise.png" alt="Tela de análise do PanorAI com radiografia panorâmica anotada" loading="lazy">
+      </div>
+      <div class="showcase-copy">
+        <div class="showcase-label">PanorAI</div>
+        <h3 class="showcase-title">Diagnóstico de apoio em segundos</h3>
+        <p class="showcase-lede">Radiografia panorâmica analisada automaticamente por IA treinada em dataset brasileiro. O dentista recebe odontograma completo, achados classificados por criticidade e relatório em PDF pronto para o prontuário.</p>
+        <ul class="showcase-highlights">
+          <li>Detecção de 31 tipos de patologias</li>
+          <li>Odontograma + relatório em PDF</li>
+          <li>Caminho regulatório ANVISA</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- LarSeguro -->
+    <div class="showcase-item reverse">
+      <div class="showcase-img-wrap">
+        <img src="assets/produtos/larseguro/01-hero.png" alt="Landing page do LarSeguro com monitoramento de idosos" loading="lazy">
+      </div>
+      <div class="showcase-copy">
+        <div class="showcase-label">LarSeguro</div>
+        <h3 class="showcase-title">Cuidado passivo, resposta em segundos</h3>
+        <p class="showcase-lede">Monitoramento ambiental que observa a rotina do idoso sem câmeras, sem microfones e sem wearable. Quedas, inatividade anormal e desvios de sono disparam alertas imediatos para a rede de contatos.</p>
+        <ul class="showcase-highlights">
+          <li>Zero câmera, zero microfone</li>
+          <li>IA aprende a rotina do familiar</li>
+          <li>Escalonamento automático de contatos</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Clínica Inteligente -->
+    <div class="showcase-item">
+      <div class="showcase-img-wrap">
+        <img src="assets/produtos/clinica/02-dashboard.png" alt="Painel administrativo da Clínica Inteligente com agenda, pacientes e indicadores" loading="lazy">
+      </div>
+      <div class="showcase-copy">
+        <div class="showcase-label">Clínica Inteligente</div>
+        <h3 class="showcase-title">A clínica inteira em uma tela</h3>
+        <p class="showcase-lede">Plataforma unificada para clínicas de acupuntura de alta performance. Agenda, pacientes, serviços, financeiro e indicadores operacionais organizados sob o conceito &ldquo;Arte dos Resultados&rdquo;.</p>
+        <ul class="showcase-highlights">
+          <li>Agenda, prontuário e financeiro unificados</li>
+          <li>Fidelização e pacotes automatizados</li>
+          <li>Indicadores de performance em tempo real</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Media P1A Builder -->
+    <div class="showcase-item reverse">
+      <div class="showcase-img-wrap">
+        <img src="assets/produtos/media-p1a/01-dashboard.png" alt="Dashboard de simulações do Media P1A Builder com ROI e canais de mídia" loading="lazy">
+      </div>
+      <div class="showcase-copy">
+        <div class="showcase-label">Media P1A Builder</div>
+        <h3 class="showcase-title">Planejamento de mídia que conversa</h3>
+        <p class="showcase-lede">Simulador interativo para alocação de investimento em mídia com assistente de IA. Ajuste percentuais por canal e veja o impacto em ROI, reach e GRP em tempo real &mdash; conversando em linguagem natural.</p>
+        <ul class="showcase-highlights">
+          <li>TV, Digital, OOH, Rádio e Print</li>
+          <li>Assistente de IA conversacional</li>
+          <li>ROI, reach e GRP em tempo real</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- TECNOLOGIA -->
 <section id="tecnologia">
-  <div class="section-tag">Como funciona</div>
+  <div class="section-tag">Como trabalhamos</div>
   <h2 class="section-title">Tecnologia</h2>
-  <p class="section-desc">Arquitetura de ponta combinando visão computacional e aprendizado semi-supervisionado para máxima eficiência com dados clínicos reais.</p>
+  <p class="section-desc">Combinamos engenharia de software robusta com inteligência artificial de ponta para entregar soluções que funcionam no mundo real.</p>
 
   <div class="tech-grid">
     <div class="tech-card">
       <div class="tech-num">01</div>
-      <h3>YOLOv8</h3>
-      <p>Arquitetura de detecção de objetos estado da arte, otimizada para imagens radiográficas de alta variabilidade.</p>
+      <h3>Visão computacional</h3>
+      <p>Modelos de detecção de objetos (YOLO) otimizados para imagens clínicas e monitoramento por câmera, com inferência em tempo real.</p>
     </div>
     <div class="tech-card">
       <div class="tech-num">02</div>
-      <h3>Semi-supervised</h3>
-      <p>Pipeline de aprendizado semi-supervisionado com pseudo-labels e threshold de confiança ≥ 0,85 para escalar o treinamento.</p>
+      <h3>APIs de alta performance</h3>
+      <p>Backends em Python/FastAPI com PostgreSQL, autenticação JWT, webhooks de pagamento e arquitetura pronta para escalar.</p>
     </div>
     <div class="tech-card">
       <div class="tech-num">03</div>
-      <h3>Active learning</h3>
-      <p>Seleção inteligente das amostras mais incertas para anotação humana, reduzindo custo sem sacrificar qualidade.</p>
+      <h3>Machine Learning</h3>
+      <p>Pipelines de treinamento semi-supervisionado, active learning e rastreabilidade completa com MLflow e DVC.</p>
     </div>
     <div class="tech-card">
       <div class="tech-num">04</div>
-      <h3>MLflow + DVC</h3>
-      <p>Rastreabilidade completa de experimentos e versões de dataset — atendendo aos requisitos da ANVISA RDC 657/2022.</p>
+      <h3>Conformidade regulatória</h3>
+      <p>Desenvolvemos desde o primeiro commit com LGPD, ANVISA RDC 657/2022, ISO 13485 e IEC 62304 em mente.</p>
     </div>
     <div class="tech-card">
       <div class="tech-num">05</div>
-      <h3>LGPD compliant</h3>
-      <p>Pipeline de anonimização DICOM auditável com log imutável, em conformidade com a Lei Geral de Proteção de Dados.</p>
+      <h3>Mobile e Web</h3>
+      <p>Interfaces em React e Flutter, com design responsivo, autenticação segura e integração nativa com nossas APIs.</p>
     </div>
     <div class="tech-card">
       <div class="tech-num">06</div>
-      <h3>Caminho ANVISA</h3>
-      <p>Desenvolvido desde o primeiro commit com os requisitos da RDC 657/2022 — ISO 13485, ISO 14971 e IEC 62304.</p>
+      <h3>IoT e localização</h3>
+      <p>Experiência com sistemas M2M, tags RFID, antenas de localização e integração com hardware Zebra Technologies.</p>
     </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 60px;">
+    <a class="btn-secondary" href="#contato">Vamos desenvolver juntos? &rarr;</a>
   </div>
 </section>
 
-<!-- ROADMAP -->
-<section id="roadmap">
-  <div class="section-tag">Onde estamos</div>
-  <h2 class="section-title">Roadmap</h2>
-  <p class="section-desc">Desenvolvimento estruturado em fases, com financiamento FAPESP PIPE e foco em registro regulatório.</p>
+<!-- TRAJETORIA -->
+<section id="trajetoria">
+  <div class="section-tag">Nossa trajetória</div>
+  <h2 class="section-title">Linha do Tempo</h2>
+  <p class="section-desc">Da primeira solução de localização até a era da inteligência artificial &mdash; uma trajetória de resiliência e evolução contínua.</p>
 
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-phase">Concluído</div>
-      <h3>MVP funcional</h3>
-      <p>Modelo YOLO treinado com 13.000 imagens públicas, capaz de identificar dentes, ausências e patologias básicas.</p>
+      <div class="tl-phase">2017</div>
+      <h3>Fundação</h3>
+      <p>David Silveira e Eliezer Oliveira se encontram e fundam a Eagle Technology. Nasce a primeira solução: localização M2M em canteiros de obras com hardware Zebra Technologies.</p>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-phase">Em andamento</div>
-      <h3>PIPE Fase 1 — FAPESP</h3>
-      <p>Construção de dataset proprietário brasileiro (10.000 imagens), expansão para 32 classes e validação clínica com especialistas.</p>
+      <div class="tl-phase">2018 &ndash; 2019</div>
+      <h3>Parceria Zebra &amp; Pivot</h3>
+      <p>Solução de localização para obras concluída. Impacto econômico global trava investimentos. Eagle adapta a plataforma para pátios de leiloeiras automotivas.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">2020 &ndash; 2024</div>
+      <h3>Pesquisa e consultoria</h3>
+      <p>Período de pesquisa e monitoramento de novas tecnologias. Consultoria especializada em TI e engenharia. Preparação para a era da inteligência artificial.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-phase">2025</div>
+      <h3>Renascimento com IA</h3>
+      <p>Eagle Technology renasce como empresa de IA aplicada. Lançamento do PanorAI (odontologia), LarSeguro (monitoramento de idosos), Clínica Inteligente (gestão de saúde) e Media P1A Builder (planejamento de mídia).</p>
     </div>
     <div class="tl-item">
       <div class="tl-dot future"></div>
-      <div class="tl-phase">Próxima fase</div>
-      <h3>Produto comercial</h3>
-      <p>API de análise integrada a sistemas de gestão odontológica, modelo SaaS por exame analisado.</p>
+      <div class="tl-phase">2026+</div>
+      <h3>Escala e mercado</h3>
+      <p>Comercialização dos produtos, registro regulatório ANVISA para PanorAI, expansão do LarSeguro para mercado nacional e evolução contínua das plataformas.</p>
     </div>
-    <div class="tl-item">
-      <div class="tl-dot future"></div>
-      <div class="tl-phase">Longo prazo</div>
-      <h3>Registro ANVISA</h3>
-      <p>Submissão do dossier técnico regulatório e obtenção do registro como Software como Dispositivo Médico (SaMD) — RDC 657/2022.</p>
-    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 48px;">
+    <a class="btn-secondary" href="#contato">Faça parte do próximo capítulo &rarr;</a>
   </div>
 </section>
 
@@ -613,18 +944,18 @@
 <section id="contato">
   <div class="section-tag">Fale conosco</div>
   <h2 class="section-title">Vamos conversar</h2>
-  <p class="section-desc">Clínica, distribuidora de equipamentos ou investidor interessado em IA odontológica? Entre em contato.</p>
+  <p class="section-desc">Investidor, parceiro estratégico ou empresa interessada em nossas soluções? Entre em contato.</p>
   <a class="contact-email" href="mailto:contato@eagletechnology.com.br">contato@eagletechnology.com.br</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <img class="footer-logo" src="eagle.png" alt="Eagle Technology">
-  <span class="footer-copy">© 2026 Eagle Technology da Informação. Todos os direitos reservados.</span>
+  <a href="#" aria-label="Voltar ao topo"><img class="footer-logo" src="eagle.png" alt="Eagle Technology"></a>
+  <span class="footer-copy">&copy; 2026 Eagle Technology da Informação. Todos os direitos reservados.</span>
   <div class="footer-links">
-    <a href="mailto:contato@eagletechnology.com.br">Contato</a>
-    <a href="#produto">Produto</a>
-    <a href="#roadmap">Roadmap</a>
+    <a href="#quem-somos">Quem Somos</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#contato">Contato</a>
   </div>
 </footer>
 
